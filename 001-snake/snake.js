@@ -18,7 +18,8 @@ const validMove = move => state =>
 
 // Next values based on state
 const nextMoves = state => state.moves.length > 1 ? dropFirst(state.moves) : state.moves
-const nextApple = state => willEat(state) ? rndPos(state) : state.apple
+const nextApple = state => willEat(state) ? validApplePos(state)(rndPos(state))  : state.apple
+const validApplePos = (state) => (randPos) => state.snake.find( pointEq(randPos) ) === undefined ? randPos : validApplePos(state)(rndPos(state))
 const nextHead  = state => state.snake.length == 0
   ? { x: 2, y: 2 }
   : {
